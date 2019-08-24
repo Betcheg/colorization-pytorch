@@ -343,7 +343,7 @@ class SIGGRAPHGenerator(nn.Module):
         self.softmax = nn.Sequential(*[nn.Softmax(dim=1),])
 
     def forward(self, input_A, input_B, mask_B):
-        conv1_2 = self.model1(torch.cat((input_A,input_B,mask_B),dim=1))
+        conv1_2 = self.model1(torch.cat((input_A),dim=1)) #,input_B,mask_B
         conv2_2 = self.model2(conv1_2[:,:,::2,::2])
         conv3_3 = self.model3(conv2_2[:,:,::2,::2])
         conv4_3 = self.model4(conv3_3[:,:,::2,::2])
@@ -489,7 +489,7 @@ class UnetGenerator(nn.Module):
 
     def forward(self, input_A, input_B, mask_B):
         # embed()
-        return self.model(torch.cat((input_A,input_B,mask_B),dim=1))
+        return self.model(torch.cat((input_A),dim=1))#input_B
 
 
 # Defines the submodule with skip connection.
